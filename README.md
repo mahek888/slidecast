@@ -1,4 +1,4 @@
-# Slidecast (very basic + WIP)
+# Slidecast (WIP)
 
 Slidecast is an AI-powered video generation tool that converts presentation PDFs and narration audio into synchronized YouTube-ready videos.
 
