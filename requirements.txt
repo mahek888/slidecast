@@ -1,0 +1,40 @@
+# UI
+PyQt6
+
+# PDF Processing
+pdf2image
+PyMuPDF
+
+# PPT Processing
+python-pptx
+
+# Image Processing
+Pillow
+
+# Audio Processing
+pydub
+
+# Video Processing
+moviepy
+
+# AI
+google-genai
+
+# Speech-to-Text
+openai-whisper
+
+# YouTube API
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
+
+# Utilities
+python-dotenv
+numpy
+pandas
+tqdm
+requests
+
+# Optional but useful
+opencv-python
+scikit-learn
