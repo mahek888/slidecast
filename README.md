@@ -1,4 +1,4 @@
-# Slidecast
+# Slidecast (very basic + WIP)
 
 Slidecast is an AI-powered video generation tool that converts presentation PDFs and narration audio into synchronized YouTube-ready videos.
 
@@ -40,36 +40,18 @@ Video Rendering
 Final MP4 Video
 ```
 
-## Installation (Windows)
-
-### 1. Install Python
-
-Download and install Python 3.12 from:
-
-https://www.python.org/downloads/
-
-During installation, ensure:
-
-```text
-✓ Add Python to PATH
-```
-
-is checked.
-
----
+## Installation (windows)
 
 ### 1. Clone the repo
 
 ```bash
-clone <repourl>
-cd repo
+git clone https://github.com/mahek888/slidecast
+cd slidecast
 ```
 
 ---
 
-### 3. Install Dependencies
-
-Open Command Prompt in the project folder and run:
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -77,7 +59,7 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Create Environment File
+### 3. Create Environment File
 
 Create a file named:
 
@@ -95,7 +77,7 @@ GEMINI_API_KEY=YOUR_API_KEY
 
 ---
 
-### 5. Launch Application
+### 4. Launch Application
 
 Double-click:
 
@@ -108,8 +90,6 @@ or run:
 ```bash
 streamlit run app_ui.py
 ```
-
-The application will open in your browser.
 
 ## Usage
 
