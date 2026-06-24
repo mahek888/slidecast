@@ -1,5 +1,6 @@
 import os
 import json
+import shutil
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -15,6 +16,22 @@ from app.timed_video_generator import TimedVideoGenerator
 
 
 def run_pipeline():
+    if os.path.exists("output/slides"):
+        shutil.rmtree("output/slides")
+
+    os.makedirs("output/slides", exist_ok=True)
+
+    for file in [
+        "output/gemini_timings.json",
+        "output/timings.json",
+        "output/final_video.mp4",
+        "output/slides.json",
+        "output/transcript.json",
+        "output/transcript_segments.json"
+    ]:
+
+        if os.path.exists(file):
+            os.remove(file)
 
     PDF_PATH = "input/sample.pdf"
 
@@ -57,66 +74,51 @@ def run_pipeline():
         timings
     )
 
-
     gemini_engine = GeminiTimingEngine()
 
-    if os.path.exists(
-        "output/gemini_timings.json"
-    ):
+    print(
+    "CALLING GEMINI FOR FRESH TIMINGS"
+)
 
-        print(
-            "Using cached Gemini timings."
+    assignments = (
+        gemini_engine.generate_timings(
+            "output/slides.json",
+            "output/transcript_segments.json"
+        )
+    )
+
+    timings = (
+        gemini_engine
+        .convert_assignments_to_timings(
+            assignments,
+            "output/transcript_segments.json"
+        )
+    )
+
+    valid = (
+        gemini_engine.validate_timings(
+            timings
+        )
+    )
+
+    if not valid:
+
+        raise Exception(
+            "Bad timing distribution."
         )
 
-        with open(
-            "output/gemini_timings.json",
-            "r",
-            encoding="utf-8"
-        ) as f:
+    with open(
+        "output/gemini_timings.json",
+        "w",
+        encoding="utf-8"
+    ) as f:
 
-            timings = json.load(f)
-
-    else:
-
-        assignments = (
-            gemini_engine.generate_timings(
-                "output/slides.json",
-                "output/transcript_segments.json"
-            )
+        json.dump(
+            timings,
+            f,
+            ensure_ascii=False,
+            indent=4
         )
-
-        timings = (
-            gemini_engine
-            .convert_assignments_to_timings(
-                assignments,
-                "output/transcript_segments.json"
-            )
-        )
-
-        valid = (
-            gemini_engine.validate_timings(
-                timings
-            )
-        )
-
-        if not valid:
-
-            raise Exception(
-                "Bad timing distribution."
-            )
-
-        with open(
-            "output/gemini_timings.json",
-            "w",
-            encoding="utf-8"
-        ) as f:
-
-            json.dump(
-                timings,
-                f,
-                ensure_ascii=False,
-                indent=4
-            )
 
 
     generator = TimedVideoGenerator()
